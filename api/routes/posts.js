@@ -1,10 +1,10 @@
 import  Express  from "express";
-import { } from "../controllers/post.js";
+import {getPosts ,addPost} from "../controllers/post.js";
 
 const route = Express.Router();
 
 
-route.get('/',);
-
+route.get('/',getPosts);
+route.post('/',addPost);
 
 export default route;

@@ -12,7 +12,13 @@ const app = Express();
 //middlewares
 //to read the body sended by the user.
 app.use(Express.json());
-app.use(cors());
+app.use((req,res,next)=>{
+    res.header("Access-Control-Allow-Credentials",true);
+    next();
+})
+app.use(cors({
+    origin : "http://localhost:3000",
+}));
 app.use(cookieParser());
 
 app.use("/user",userRoutes);
