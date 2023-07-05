@@ -1,10 +1,10 @@
 import  Express  from "express";
-import { } from "../controllers/comment.js";
+import {getComments} from "../controllers/comment.js";
 
 const route = Express.Router();
 
 
-route.get('/',);
+route.get('/',getComments);
 
 
 export default route;
