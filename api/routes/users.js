@@ -4,7 +4,7 @@ import { getUser } from "../controllers/user.js";
 const route = Express.Router();
 
 
-route.get('/',getUser);
+route.get('/:userId',getUser);
 
 
 export default route;
