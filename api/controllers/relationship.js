@@ -2,14 +2,14 @@ import { db } from "../connect.js";
 import jwt from "jsonwebtoken";
 
 export const getRelationships = (req, res) => {
-  console.log("hsdbs");
+ // console.log("hsdbs");
 
-  const q = "SELECT userId FROM likes  WHERE postId = ? ";
+  const q = "SELECT followerUserId FROM relationships  WHERE followedUserId = ? ";
 
-  db.query(q, [req.query.postId], (err, data) => {
+  db.query(q, [req.query.followedUserId], (err, data) => {
     if (err) return res.status(500).json(err);
 
-    const ans = data.map((curr) => curr.userId);
+    const ans = data.map((curr) => curr.followerUserId);
     return res.status(200).json(ans);
   });
 };
@@ -22,33 +22,31 @@ export const addRelationships = (req, res) => {
     if (err) return res.status(403).json("Token is Not valid !");
 
     const q =
-      "INSERT INTO likes (`userId`,`postId`) VALUES (?, ?) ";
+      "INSERT INTO  relationships (`followerUserId`,`followedUserId`) VALUES (?, ?) ";
 
 
-    db.query(q, [userInfo.id,req.body.postId], (err, data) => {
+    db.query(q, [userInfo.id,req.body.userId], (err, data) => {
       if (err) return res.status(500).json(err);
-      return res.status(200).json("Post has been Liked!");
+      return res.status(200).json("following");
     });
   });
 };
 
 export const deleteRelationships = (req, res) => {
+   
     const token = req.cookies.accesstoken;
     if (!token) return res.status(401).json("Not logged In !");
   
     jwt.verify(token, "secretKey", (err, userInfo) => {
       if (err) return res.status(403).json("Token is Not valid !");
   
-    const q = "DELETE FROM likes WHERE `userId` = ? AND `postId` = ?";
+    const q = "DELETE FROM relationships WHERE `followerUserId` = (?) AND `followedUserId` = (?) ";
 
-    const values = [
-        
-        
-    ]
+   
 
-    db.query(q,[userInfo.id,req.query.postId],(err,data)=>{
+    db.query(q,[userInfo.id,req.query.userId],(err,data)=>{
         if(err) return res.status(500).json(err);
-        return res.status(200).json("post has been disliked !");
+        return res.status(200).json("unfollowed");
     })
     });
   };

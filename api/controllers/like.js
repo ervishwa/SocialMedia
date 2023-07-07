@@ -2,7 +2,7 @@ import { db } from "../connect.js";
 import jwt from "jsonwebtoken";
 
 export const getLikesCount = (req, res) => {
-  console.log("hsdbs");
+ // console.log("hsdbs");
 
   const q = "SELECT userId FROM likes  WHERE postId = ? ";
 
