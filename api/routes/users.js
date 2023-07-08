@@ -1,10 +1,11 @@
 import  Express  from "express";
-import { getUser } from "../controllers/user.js";
+import { getUser ,updateUser} from "../controllers/user.js";
 
 const route = Express.Router();
 
 
 route.get('/:userId',getUser);
+route.put('/',updateUser)
 
 
 export default route;
